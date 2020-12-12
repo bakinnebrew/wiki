@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>TODO entry</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            display: inline;
+        }
+    </style>
+    </head>
+    <body>
+        <ul>
+            <li>
+                 <a href="{% url 'encyclopedia:index' %}">Home</a></div> |
+             </li>
+             <li>
+                <form action="{% url 'encyclopedia:edit' %" method = "POST">
+                    <label for='encyclopedia:edit'>Edit Page</label>
+                    <input id="edit_conent" type="text" name="edit_conent">
+                    {{ edit }}
+                    <input type="submit" value="OK">
+                </form>
+            </li>
+        </ul>
+        {{ entry|safe }}
+    </body>
+</html>
