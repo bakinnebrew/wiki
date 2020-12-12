@@ -22,10 +22,6 @@ class CreateNewForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
 
 
-class EditForm(UpdateView):
-    edit = forms.CharField(widget=forms.Textarea)
-
-
 def search(request):
     if request.method == "GET":
         form = NewSearchForm(request.GET)
