@@ -27,15 +27,34 @@ def save_entry(title, content):
     default_storage.save(filename, ContentFile(content))
 
 
+def is_exact_match(title):
+    result = list(filter(lambda entry: title == entry, list_entries()))
+    # returnVal = len(result) == 1
+    # return returnVal
+
+    if len(result) == 1:
+        return True
+    else:
+        return False
+
+    # return len(result) == 1
+
+
 def search_entries(title):
     """
     Retieves a list of entries by title as they compare to the user-entered search entry
     """
-    for filename in default_storage.listdir("entries"):
-        if title == filename:
-            return filename
-        # return list(sorted(re.sub(r"\.md$", "", title)
-        #              for title in filename))
+    # return list(filter(filter_entries, list_entries()))
+    return list(filter(lambda entry: title in entry, list_entries()))
+
+    # print('title: ' + title)
+    # for res in result:
+    #     print('result: ' + res)
+    # for filename in default_storage.listdir("entries"):
+    # if title == filename:
+    #     return filename
+    # return list(sorted(re.sub(r"\.md$", "", title)
+    #              for title in filename))
     # compare search entry with current entry filenames
     # if none compare, display like terms
     # if no like terms, display, no results found
@@ -52,3 +71,9 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+# def delete_entry(title):
+#     """
+#     Deletes an entry
+#     """
+#     get_entry(title)

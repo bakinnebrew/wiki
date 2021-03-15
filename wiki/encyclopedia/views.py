@@ -27,6 +27,12 @@ def search(request):
         form = NewSearchForm(request.GET)
         if form.is_valid():
             search = form.cleaned_data["search"]
+
+        if util.is_exact_match(search):
+            markdowner = Markdown()
+            return render(request, "encyclopedia/entry.html", {
+                "entry": markdowner.convert(util.get_entry(search))
+            })
         return render(request, "encyclopedia/search.html", {
             "results": util.search_entries(search)
         })
@@ -50,7 +56,6 @@ def new(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
         util.save_entry(title, content)
-        # maybe provide this argument as context?
         return redirect('encyclopedia:entry', entry=title)
     else:
         return render(request, "encyclopedia/new.html", {
@@ -65,7 +70,37 @@ def entry(request, entry):
         return render(request, "encyclopedia/error.html")
     else:
         markdowner = Markdown()
+        e = util.get_entry(entry)
         return render(request, "encyclopedia/entry.html", {
-            "entry": markdowner.convert(util.get_entry(entry))
+            "e": e,
+            "entry": markdowner.convert(e),
+            "title": entry
             # maybe have an additional argument that displays content, while we have another that displays title
         })
+
+
+def edit_page(request, entry):
+    if request.method == "GET":
+        title = entry
+        content = util.get_entry(title)
+        form = CreateNewForm(
+            {"title": title, "content": content})  # passing in
+        return render(request, "encyclopedia/edit_page.html", {
+            "form": form,
+            "title": entry
+        })
+    form = CreateNewForm(request.POST)
+    if form.is_valid():
+        title = form.cleaned_data["title"]
+        content = form.cleaned_data["content"]
+    util.save_entry(title, content)
+    return redirect('encyclopedia:entry', entry=title)
+
+# def delete(request, entry):
+#     if request.method == "GET":
+
+# create edit template page
+# get the entry, but not converted. just markdown
+# utilize logic of new function to create a new form to POST to the server.
+# redirect to new page
+#

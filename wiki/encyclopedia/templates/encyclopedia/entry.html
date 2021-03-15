@@ -19,15 +19,13 @@
     <body>
         <ul>
             <li>
-                 <a href="{% url 'encyclopedia:index' %}">Home</a></div> |
-             </li>
-             <li>
-                <form action="{% url 'encyclopedia:edit' %" method = "POST">
-                    <label for='encyclopedia:edit'>Edit Page</label>
-                    <input id="edit_conent" type="text" name="edit_conent">
-                    {{ edit }}
-                    <input type="submit" value="OK">
-                </form>
+                <a href="{% url 'encyclopedia:index' %}">Home</a>|
+            </li>
+            <li>
+                <a href=/wiki/edit_page/{{title}}>Edit Page</a> | 
+            </li>
+            <li>
+                <a href="{% url 'encyclopedia:index' %}"> Delete </a>
             </li>
         </ul>
         {{ entry|safe }}
