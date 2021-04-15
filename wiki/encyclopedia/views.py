@@ -21,7 +21,7 @@ class CreateNewForm(forms.Form):
                             max_length=25)
     content = forms.CharField(widget=forms.Textarea)
 
-
+# runs a search function, found in util.py, and returns any results
 def search(request):
     if request.method == "GET":
         form = NewSearchForm(request.GET)
@@ -37,7 +37,7 @@ def search(request):
             "results": util.search_entries(search)
         })
 
-
+# returns main page when accessed
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
@@ -48,7 +48,7 @@ def index(request):
     # <li><a href=/wiki/{{entry.md}}>{{ entry }}</a></li>
     # {% endfor %}
 
-
+# function to create a new entry 
 def new(request):
     if request.method == "POST":
         form = CreateNewForm(request.POST)
@@ -62,7 +62,7 @@ def new(request):
             "form": CreateNewForm(),
         })
 
-
+# queries for the selecged entry
 def entry(request, entry):
     entry_page = util.get_entry(entry)
 
@@ -78,7 +78,7 @@ def entry(request, entry):
             # maybe have an additional argument that displays content, while we have another that displays title
         })
 
-
+# function that allows user to edit the entry page 
 def edit_page(request, entry):
     if request.method == "GET":
         title = entry
