@@ -1,1 +1,0 @@
-A game invented by Kara.
